@@ -1,3 +1,5 @@
+from cgitb import text
+from faulthandler import disable
 from tkinter import *
 import sqlite3
 import string
@@ -122,6 +124,7 @@ def login(event=None):
             def gen_fun():
                 root = Toplevel() 
                 root.title("Pass.IO")
+                nroot.iconbitmap("icon.ico")
                 w_screen = 450
                 h_screen = 620
 
@@ -207,14 +210,14 @@ def login(event=None):
                     def save_butt():
                         conn=sqlite3.connect('savepass.db')
                         c = conn.cursor()
-                        c.execute("INSERT INTO save_pass VALUES (:user,:pass,:domain_value,:username_value, :generated, :oid_value)",
+                        c.execute("INSERT INTO save_pass VALUES (:user,:pass,:oid_value,:domain_value,:username_value,:generated)",
                                 {
                                     "user":user_value.get(),
                                     "pass":pass_value.get(),
+                                    "oid_value":oid_value,
                                     "domain_value":domain_value.get(),
                                     "username_value":username_value.get(),
-                                    "generated":password_value.get(),
-                                    "oid_value":oid_value
+                                    "generated":password_value.get()
                                 })
                         conn.commit()
                         conn.close()
@@ -317,30 +320,30 @@ def login(event=None):
                 c.execute("SELECT * FROM save_pass ")
                 r=c.fetchall()
                 emptylist=[]
+                conn.close()
 
                 for rec in r:
-                    if rec[5] == oid_value:
+                    if rec[2] == oid_value:
                         emptylist.append(rec)         
              
-
+                domain_var= StringVar()
+                user_var= StringVar()
+                pass_var= StringVar()
                 
-
-                def show_pass(indexvar=0):
-        
+                domain_entry = Entry(sroot,textvariable=domain_var, font=("Louis George Café Light", 20), bg="#db5e5e", relief= FLAT,fg="#3b3f46" ) 
+                user_entry = Entry(sroot,textvariable=user_var, font=("Louis George Café Light", 20), bg="#db5e5e",relief=FLAT,fg="#3b3f46" )
+                pass_entry = Entry(sroot,textvariable=pass_var, font=("Bahnschrift Light", 20),justify='center', bg="#db5e5e",relief=FLAT, fg="#3b3f46" )
                     
-                    domain_entry = Entry(sroot, font=("Louis George Café Light", 20), bg="#db5e5e", relief= FLAT,fg="#3b3f46" ) 
-                    user_entry = Entry(sroot, font=("Louis George Café Light", 20), bg="#db5e5e",relief=FLAT,fg="#3b3f46" )
-                    pass_entry = Entry(sroot, font=("Bahnschrift Light", 20),justify='center', bg="#db5e5e",relief=FLAT, fg="#3b3f46" )
-
+                def show_pass(indexvar=0):
 
                     domain_entry.delete(0,END)
-                    domain_entry.insert(0,emptylist[indexvar][2])
+                    domain_entry.insert(0,emptylist[indexvar][3])
 
                     user_entry.delete(0,END)
-                    user_entry.insert(0,emptylist[indexvar][3])
+                    user_entry.insert(0,emptylist[indexvar][4])
 
                     pass_entry.delete(0,END)
-                    pass_entry.insert(0,emptylist[indexvar][4])
+                    pass_entry.insert(0,emptylist[indexvar][5])
 
 
 
@@ -363,16 +366,73 @@ def login(event=None):
                     else:
                         indexvar = len(emptylist) - 1                     
                     show_pass(indexvar)
-                    
 
+                def edit_butt():
+                    eroot = Toplevel(sroot)
+                    eroot.title("Pass.IO")
+                    eroot.iconbitmap("icon.ico")
+                    w_screen = 450  
+                    h_screen = 620  
+
+                    screen_width = eroot.winfo_screenwidth() 
+                    screen_height = eroot.winfo_screenheight()   
+                    
+                    x_cor = (screen_width / 2) - (w_screen / 2) 
+                    y_cor = (screen_height / 2) - (h_screen / 2)    
+                    
+                    eroot.geometry("%dx%d+%d+%d" % (w_screen, h_screen, x_cor, y_cor))
+                    eroot.wm_resizable(width=False, height=False)
+                            
+                    bg__ = PhotoImage(file="editpass.png")    
+                    
+                    imgbg = Canvas(eroot)
+                    imgbg.pack(fill="both", expand=True)
+                    imgbg.create_image(225, 310, image=bg__)
+
+                    imgbg.create_text(225, 90, text="Enter New Details", font=("Louis George Café bold", 30), fill="#2d2d2d")
+                    imgbg.create_text(85, 170, text="Domain", font=("Louis George Café bold", 20), fill="#2d2d2d")
+                    imgbg.create_text(98, 270, text="Username", font=("Louis George Café bold", 20), fill="#2d2d2d")
+                    imgbg.create_text(98, 370, text="Password", font=("Louis George Café bold", 20), fill="#2d2d2d")
+
+                    newdomain_entry = Entry(eroot, font=("Louis George Café Light", 20), bg="#f5b8c8", relief= FLAT,fg="#2d2d2d") 
+                    newdomain_entry.insert(0,domain_entry.get())
+                    newuser_entry = Entry(eroot, font=("Louis George Café Light", 20), bg="#f5b8c8",relief=FLAT,fg="#2d2d2d")
+                    newuser_entry.insert(0,user_entry.get())
+                    imgbg.create_text(225, 410, text=pass_var.get(), font=("Bahnschrift Light", 20), fill="#2d2d2d")                    
                 
+                    imgbg.create_window(225, 210, window=newdomain_entry, height=35, width=380)
+                    imgbg.create_window(225, 310, window=newuser_entry, height=35, width=380)
+                    
+                    def updatedetails():
+                        conn=sqlite3.connect('savepass.db')
+                        c = conn.cursor()
+                        olddomain = domain_entry.get()
+                        newdomain = newdomain_entry.get()
+                        olduser = user_entry.get()
+                        newuser = newuser_entry.get()
+                        c.execute("update save_pass set domain = ?, username = ? where domain = ? and username = ?", (newdomain,newuser,olddomain,olduser))
+                        conn.commit()
+                        conn.close()
+
+                    def saverecbutt():
+                        eroot.destroy()
+                        sroot.destroy()
+                        save_fun()
+                    saverec_button=Button(eroot, text="Save", borderwidth=0, relief=FLAT, font=("Louis George Café Light", 30),bg='#ffbfd0',activebackground='#ffbfd0',fg='#2d2d2d',command=lambda: [updatedetails(),saverecbutt()])                 
+                    imgbg.create_window(225,560, window=saverec_button, width= 140 ,height= 80)
+        
+                    eroot.mainloop()
+
                 show_pass()
 
                 next_button = Button(sroot, text="Next", borderwidth=0, relief=FLAT, font=("Louis George Café Light", 30),bg='#eb6565',activebackground='#eb6565',fg='#094873',command=next_butt)                 
-                imgbg.create_window(340,505, window=next_button, width= 140 ,height= 80)
+                imgbg.create_window(360,520, window=next_button, width= 120 ,height= 80)
 
                 prev_button = Button(sroot, text="Prev", borderwidth=0, relief=FLAT, font=("Louis George Café Light", 30),bg='#eb6565',activebackground='#eb6565',fg='#094873',command=prev_butt)                 
-                imgbg.create_window(110,505, window=prev_button, width= 140 ,height= 80)
+                imgbg.create_window(90,520, window=prev_button, width= 120 ,height= 80)
+
+                edit_button=Button(sroot, text="Edit", borderwidth=0, relief=FLAT, font=("Louis George Café Light", 30),bg='#eb6565',activebackground='#eb6565',fg='#094873',command=edit_butt)                 
+                imgbg.create_window(225,520, window=edit_button, width= 135 ,height= 80)
    
                 sroot.mainloop()
 
