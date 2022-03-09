@@ -1,5 +1,3 @@
-from cgitb import text
-from faulthandler import disable
 from tkinter import *
 import sqlite3
 import string
