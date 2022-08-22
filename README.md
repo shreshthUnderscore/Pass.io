@@ -20,4 +20,4 @@ Our program offers:-
 
 The frontend of the program is made in python using the “Tkinter” module. Tkinter is python's default GUI module. The main window offers a login option for existing users and a signup button for new users.
 
-!(https://imgur.com/kasTAWk)
+![login window](https://imgur.com/kasTAWk)
