@@ -1,6 +1,6 @@
 # **Pass.io**
 
-![logo](https://user-images.githubusercontent.com/88784050/185992710-fc55ecb0-ca82-46d9-b1f0-bc03103500e5.png)
+![image](https://user-images.githubusercontent.com/88784050/185993072-d095ead4-a912-4b4e-a1cc-fa96d29beb37.png)
 
 Single place to manage all your passwords and generate new ones
 
@@ -10,9 +10,9 @@ Clone or [download](https://github.com/IceUnderscore/Pass.io/archive/refs/heads/
 
 ## Preface
 
-The main objective of our computer science project is to make people aware of the importance of having a strong password and help them generate and manage their passwords.
+The main objective of this computer science project is to make people aware of the importance of having a strong password and help them generate and manage their passwords.
 
-With our knowledge of python and SQL our team is proud to present “Pass.io” a GUI based password manager made in python using the “Tkinter” module.
+With my knowledge of python and SQL i am proud to present “Pass.io” a GUI based password manager made in python using the “Tkinter” module.
 
 Our program offers:-
 - Simple and modern interface
@@ -43,4 +43,6 @@ The frontend of the program is made in python using the “Tkinter” module. Tk
 ## **View Saved Passwords**
 ![image](https://user-images.githubusercontent.com/88784050/185991353-a376797b-d3a1-4779-b739-961b4d70c679.png)
 
+
+### **Made with ♡ by Shreshth Sharma**
 
