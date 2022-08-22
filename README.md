@@ -1,4 +1,4 @@
-# Pass.io
+# **Pass.io**
 
 Single place to manage all your passwords and generate new ones
 
@@ -15,3 +15,9 @@ Our program offers:-
 - A place to generate new passwords, save existing passwords and delete or modify saved passwords.
 - Local encrypted storage of all your passwords.
 - Total transparency to the users
+
+## Frontend
+
+The frontend of the program is made in python using the “Tkinter” module. Tkinter is python's default GUI module. The main window offers a login option for existing users and a signup button for new users.
+
+!(https://imgur.com/kasTAWk)
