@@ -1,8 +1,8 @@
 # **Pass.io**
 
-![image](https://user-images.githubusercontent.com/88784050/185993072-d095ead4-a912-4b4e-a1cc-fa96d29beb37.png)
+![logoogoog](https://user-images.githubusercontent.com/88784050/185993512-f16c47bc-bb0e-42fc-a4c9-fb9cce03e55e.png)
 
-Single place to manage all your passwords and generate new ones
+Single place to manage all your passwords and generate new ones.
 
 # **Installation**
 
