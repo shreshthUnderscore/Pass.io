@@ -1,5 +1,7 @@
 # **Pass.io**
 
+![logo](https://user-images.githubusercontent.com/88784050/185992710-fc55ecb0-ca82-46d9-b1f0-bc03103500e5.png)
+
 Single place to manage all your passwords and generate new ones
 
 # **Installation**
