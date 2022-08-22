@@ -43,6 +43,9 @@ The frontend of the program is made in python using the “Tkinter” module. Tk
 ## **View Saved Passwords**
 ![image](https://user-images.githubusercontent.com/88784050/185991353-a376797b-d3a1-4779-b739-961b4d70c679.png)
 
+## **Backend**
+
+The program’s database is handled in sqlite3 using the [sqlite3 module](https://docs.python.org/3/library/sqlite3.html). The program stores every user's login credentials during signup along with storing their saved passwords and all the new generated passwords. When chosen to save the passwords are stored along with their specified site/email id.
 
 ### **Made with ♡ by Shreshth Sharma**
 
